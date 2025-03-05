@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="9dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/popularitemimage"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/popularitemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/yeon_sung"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginLeft="16dp"
+                android:text="Food Name"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/popularitemimage"
+                app:layout_constraintStart_toEndOf="@+id/popularitemimage"
+                app:layout_constraintTop_toTopOf="@+id/popularitemimage" />
+
+            <TextView
+                android:id="@+id/popularitemprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="$5"
+                android:textColor="@color/app_green"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.663"
+                app:layout_constraintStart_toEndOf="@+id/popularitemname"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/popularitemaddtocartbtn"
+                android:layout_width="93dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/startbtn_backgorund"
+                android:gravity="center"
+                android:text="Add To Cart"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/popularitemprice"
+                app:layout_constraintStart_toStartOf="@+id/popularitemprice"
+                app:layout_constraintTop_toBottomOf="@+id/popularitemprice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
