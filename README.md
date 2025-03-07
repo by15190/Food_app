@@ -1,4 +1,4 @@
-# Tasty Bites - Android Food Ordering App
+# EAT-A-WAY -- Android Food Ordering App
 
 A modern food ordering application built with Kotlin and Firebase, providing customers with a seamless food ordering experience on Android devices.
 
