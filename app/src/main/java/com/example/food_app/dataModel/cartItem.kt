@@ -1,10 +1,10 @@
 package com.example.food_app.dataModel
 
 data class cartItem(
-    val foodimageurl: String? = null,
+    val foodImageurl: String? = null,
     val foodname: String? = null,
-    val fooddescription: String? = null,
+    val foodDescription: String? = null,
     val quantity: Int? = null,
-    val foodprice: String? = null,
-    val foodingredient: String? = null,
+    val foodPrice: String? = null,
+    val foodIngredient: String? = null,
 )

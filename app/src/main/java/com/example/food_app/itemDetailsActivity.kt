@@ -52,15 +52,17 @@ class itemDetailsActivity : AppCompatActivity() {
         foodName = intent.getStringExtra("name")
         fooddescription = intent.getStringExtra("description")
         foodprice = intent.getStringExtra("price")
-        foodindgredient = intent.getStringExtra("indegridient")
-        foodimage = intent.getStringExtra("imageurl")
+        foodindgredient = intent.getStringExtra("ingridient")
+        foodimage = intent.getStringExtra("imageurl")?:""
 
         with(binding) {
             itemDetailFoodname.text = foodName
             itemDetailFooddescription.text = fooddescription
             itemDetailFoodIngredients.text = foodindgredient
+            if (foodimage != null){
             val uri = Uri.parse(foodimage)
             Glide.with(this@itemDetailsActivity).load(uri).into(itemDetailFoodimage)
+        }
         }
 
         binding.addtoCartbutton.setOnClickListener {

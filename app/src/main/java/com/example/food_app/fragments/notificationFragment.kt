@@ -37,7 +37,8 @@ class notificationFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View?
+    {
         // Inflate the layout for this fragment
         binding = FragmentNotificationBinding.inflate(layoutInflater, container, false)
         return binding.root

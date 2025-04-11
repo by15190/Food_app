@@ -35,6 +35,7 @@
             <TextView
                 android:id="@+id/cart_itemname"
                 android:layout_width="wrap_content"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/yeon_sung"
@@ -48,8 +49,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textSize="16dp"
                 android:fontFamily="@font/yeon_sung"
-                android:text="TextView"
+                android:hint="$23"
                 android:textColor="@color/app_green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cart_itemimage"

@@ -49,16 +49,16 @@ class payoutActivity : AppCompatActivity() {
             insets
         }
 
-        /// initialize the firebase auth
-        auth = FirebaseAuth.getInstance()
-        databaseref = FirebaseDatabase.getInstance().getReference()
 
-        /// set the user data
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance()
+        databaseref = FirebaseDatabase.getInstance().reference
+
+        // Pre-fill user data
         setUserData()
 
-        // userDetails from fireBase
-        val intent = intent
-        name = intent.getStringArrayListExtra("foodName")!!
+        // Get order data from intent
+        foodname = intent.getStringArrayListExtra("foodName")!!
         foodprice = intent.getStringArrayListExtra("foodprice")!!
         fooddes = intent.getStringArrayListExtra("fooddescription")!!
         foodingr = intent.getStringArrayListExtra("foodingredient")!!
@@ -69,8 +69,8 @@ class payoutActivity : AppCompatActivity() {
         binding.totalPrice.setText(totalAmount)
 
         binding.backbutton.setOnClickListener { finish() }
+
         binding.placeorderBtn.setOnClickListener {
-            // get the data from the text view
             val name = binding.name.text.toString().trim()
             val address = binding.address.text.toString().trim()
             val phone = binding.phone.text.toString().trim()
@@ -79,33 +79,33 @@ class payoutActivity : AppCompatActivity() {
                 Toast.makeText(this, "please enter all the details", Toast.LENGTH_SHORT).show()
             } else {
                 placeOrder()
+                val bottomSheetDialog = CongratsFragment()
+                bottomSheetDialog.show(supportFragmentManager, "Test")
             }
-
-            val bottomSheetDialog = CongratsFragment()
-            bottomSheetDialog.show(supportFragmentManager, "Test")
         }
     }
 
     private fun placeOrder() {
         userID = auth.currentUser?.uid.toString()
         val currentTime = System.currentTimeMillis()
-        val itemPushKey = databaseref.child("OrderDetails").push().key/* .push() → Creates a unique child node with an auto-generated key.
-.key → Retrieves the key of that newly generated node.  */
+        val itemPushKey = databaseref.child("OrderDetails").push().key
+
         val orderDetails = orderDetails(
-            userID,
-            name.toString(),
-            foodname,
-            foodImage,
-            foodprice,
-            quantities,
-            address.toString(),
-            currentTime.toString(),
-            phone.toString(),
-            currentTime = currentTime,
-            itemPushKey = itemPushKey,
+            userUID = userID,
+            userName = binding.name.text.toString().trim(),
+            foodNames = foodname,
+            foodImages = foodImage ,
+            foodPrices = foodprice,
+            foodQuantities = quantities,
+            address = binding.address.text.toString().trim(),
+            totalPrice = totalAmount,
+            phone = binding.phone.text.toString().trim(),
             orderAccepted = false,
-            paymentReceived = false
+            paymentReceived = false,
+            itemPushKey = itemPushKey,
+            currentTime = currentTime
         )
+
         val orderRef = databaseref.child("OrderDetails").child(itemPushKey!!)
         orderRef.setValue(orderDetails).addOnSuccessListener {
             Toast.makeText(this, "order placed successfully", Toast.LENGTH_SHORT).show()
@@ -118,9 +118,7 @@ class payoutActivity : AppCompatActivity() {
 
     private fun addOrderDetailtoHistory(orderDetails: orderDetails) {
         databaseref.child("users").child(userID).child("buyHistory")
-            .child(orderDetails.itemPushKey!!).setValue(orderDetails).addOnSuccessListener {
-
-            }
+            .child(orderDetails.itemPushKey!!).setValue(orderDetails)
     }
 
     private fun removeItemfromCart() {
@@ -128,23 +126,22 @@ class payoutActivity : AppCompatActivity() {
         cartItemsRef.removeValue()
         startActivity(Intent(this, HistoryFragment::class.java))
     }
-
     private fun calculateTotalAmount(): Int {
-        var totalamount = 0
+        var totalAmount = 0
         for (i in 0 until foodprice.size) {
-            val price = foodprice[i]
-            val lastchar = price.last()
-            val priceIntvalue = if (lastchar == '$') {
-                price.dropLast(1).toInt()
-            } else {
-                price.toInt()
-            }
-            val quantity = quantities[i]
+            val priceStr = foodprice.getOrNull(i)?.trim() ?: continue
+            val quantityStr = quantities.getOrNull(i)?.trim() ?: "1"
 
-            totalamount = totalamount + (price.toInt() * quantity.toInt())
+            // skip if price is empty
+            if (priceStr.isEmpty()) continue
 
+            val cleanPrice = priceStr.removeSuffix("$")
+            val priceInt = cleanPrice.toIntOrNull() ?: 0
+            val qtyInt = quantityStr.toIntOrNull() ?: 1
+
+            totalAmount += priceInt * qtyInt
         }
-        return totalamount
+        return totalAmount
     }
 
     private fun setUserData() {
@@ -156,22 +153,24 @@ class payoutActivity : AppCompatActivity() {
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val Username = snapshot.child("name").getValue(String::class.java)
-                        val Userphone = snapshot.child("phone").getValue(String::class.java)
-                        val Useraddress = snapshot.child("address").getValue(String::class.java)
+                        val username = snapshot.child("name").getValue(String::class.java)
+                        val userPhone = snapshot.child("phone").getValue(String::class.java)
+                        val userAddress = snapshot.child("address").getValue(String::class.java)
 
                         binding.apply {
-                            name.setText(Username)
-                            address.setText(Useraddress)
-                            phone.setText(Userphone)
+                            name.setText(username)
+                            address.setText(userAddress)
+                            phone.setText(userPhone)
                         }
                     }
-
                 }
 
-
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Toast.makeText(
+                        this@payoutActivity,
+                        "Error loading user data",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
         }

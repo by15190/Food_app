@@ -53,8 +53,8 @@ class SearchFragment : Fragment() {
 
     private fun retrieveMenuitem() {
         database = FirebaseDatabase.getInstance()
-        val datbaseref = database.reference.child("menu")
-        datbaseref.addListenerForSingleValueEvent(object : ValueEventListener {
+        val databaseref = database.reference.child("menu")
+        databaseref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (foodsnapshot in snapshot.children) {
                     if (foodsnapshot != null) {

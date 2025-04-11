@@ -84,7 +84,7 @@ class HomeFragment : Fragment() {
     private fun retrieveMenuAndDisplayPopularItems() {
         // Initialize Firebase database instance
         database = FirebaseDatabase.getInstance()
-        val foodRef = database.reference.child("menus")
+        val foodRef = database.reference.child("menu")
         menuItems = mutableListOf() // Initialize the list
 
         // Fetch menu data from Firebase

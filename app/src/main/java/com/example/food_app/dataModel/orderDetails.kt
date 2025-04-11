@@ -18,7 +18,7 @@ data class orderDetails(
     var paymentReceived: Boolean = false,
     var itemPushKey: String? = null,
     var currentTime: Long = 0,
-) : Serializable {
+) : Parcelable, Serializable {
 
     constructor(parcel: Parcel) : this(
         userUID = parcel.readString(),
@@ -36,7 +36,7 @@ data class orderDetails(
         currentTime = parcel.readLong()
     )
 
-    fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(userUID)
         parcel.writeString(userName)
         parcel.writeStringList(foodNames)
@@ -52,11 +52,10 @@ data class orderDetails(
         parcel.writeLong(currentTime)
     }
 
-    fun describeContents(): Int = 0
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<orderDetails> {
         override fun createFromParcel(parcel: Parcel): orderDetails = orderDetails(parcel)
         override fun newArray(size: Int): Array<orderDetails?> = arrayOfNulls(size)
     }
-
 }

@@ -65,7 +65,7 @@ class menu_bottom_sheet_Fragment :
     private fun retrieveMenuItems() {
         // Get an instance of Firebase database
         database = FirebaseDatabase.getInstance()
-        val foodRef = database.reference.child("menus")
+        val foodRef = database.reference.child("menu")
 
         // Fetch data from Firebase
         foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
