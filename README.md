@@ -1,3 +1,6 @@
+The app might not works because now the firebase remove the cloud storage to store and retreive images , as the images are required to show the other detail of the item . 
+However, you can still work around the code 
+
 # EAT-A-WAY -- Android Food Ordering App
 
 A modern food ordering application built with Kotlin and Firebase, providing customers with a seamless food ordering experience on Android devices.
@@ -108,6 +111,23 @@ cd tasty-bites
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+# ⚠️ Important Notice: Firebase Cloud Storage Issue
+
+This app was originally designed to store and retrieve images using Firebase Cloud Storage. However, due to Firebase's recent policy change, Cloud Storage now requires a paid **Blaze Plan**, which is not available on the free **Spark Plan**.
+
+## 🚀 Workarounds & Next Steps
+
+### 🔄 Alternative Storage Solutions
+- The app can be modified to use **Cloudinary, Imgur, Supabase, or local storage** for images.
+- Future updates may integrate a free cloud storage service.
+
+### 🛠 How to Run the App Without Firebase Storage
+- If you want to test the app, you can manually replace Firebase image URLs with **local assets** or a **free hosting service**.
+
+### 🧐 Code Review
+- The **image retrieval logic** is already implemented.
+- If Firebase Cloud Storage is enabled (**Blaze Plan**), it will work as expected.
 
 
 ## Acknowledgments
